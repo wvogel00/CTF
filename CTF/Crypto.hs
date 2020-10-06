@@ -3,7 +3,7 @@ module CTF.Crypto where
 import Data.Char
 
 caesar :: Int -> String -> String
-caesar k = map (\c -> if isAlpha c then caesar' c else c)
+caesar k = map (\c -> if isAlphaNum c then caesar' c else c)
 	where
 	caesar' c
 		| isUpper c = chr $ 65 + mod (ord c - 65 + k) 26
