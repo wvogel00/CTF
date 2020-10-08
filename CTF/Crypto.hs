@@ -45,10 +45,6 @@ morseTree = makeTree " ETIANMSURWDKGOHVF L PJBXCYZQ  54 3   2  +    16=/     7  
 makeTree :: [a] -> Tree a
 makeTree xs = foldl insertTree Nil xs
 
-heightTree :: Tree a -> Int
-heightTree Nil = 0
-heightTree (Tree tl _ tr) = max (1+heightTree tl) (1+heightTree tr)
-
 insertTree tree v = insert tree v
 	where
 	insert Nil v = Tree Nil v Nil
@@ -57,21 +53,21 @@ insertTree tree v = insert tree v
 								then Tree (insert tl v) x tr
 								else Tree tl x (insert tr v)
 
-havingNil (Tree Nil _ _) = True
-havingNil (Tree _ _ Nil) = True
-havingNil (Tree _ _ _) = False
-
-headTree Nil = undefined
-headTree (Tree _ x _) = x
+heightTree :: Tree a -> Int
+heightTree Nil = 0
+heightTree (Tree tl _ tr) = max (1+heightTree tl) (1+heightTree tr)
 
 sizeTree :: Tree a -> Int
 sizeTree Nil = 0
 sizeTree (Tree tl _ tr) = 1 + sizeTree tl + sizeTree tr
 
+-- モールスを復号
 demorse :: [MorseSignal] -> Char
 demorse xs = demorse' morseTree xs
 	where
 	demorse' Nil _ = undefined
 	demorse' (Tree _ x _) [] = x
 	demorse' (Tree tl _ tr) (x:xs) = if x == Dot then demorse' tl xs else demorse' tr xs
-	
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
